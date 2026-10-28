@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Wrappers are positioned; the images inside them are animated, so the
+   bobbing/shaking never fights with positioning or dragging. */
+.sprite {
+  position: absolute;
+}
+
+.sprite img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+/* ---------- Scene 1 ---------- */
+
+#scene1 {
+  background: url("assets/inside-scene.jpg") center / cover no-repeat;
+}
+
+#guy-wrap {
+  left: 8vw;
+  bottom: 8vh;
+  height: 50vh;
+  touch-action: none;
+}
+
+#hat-wrap {
+  left: 8vw;
+  bottom: 60vh;
+  height: 15vh;
+  cursor: pointer;
+}
+
+#door-wrap {
+  right: 8vw;
+  bottom: 8vh;
+  height: 65vh;
+}
+
+#guy-wrap.draggable {
+  cursor: grab;
+}
+
+#guy-wrap.dragging {
+  cursor: grabbing;
+  z-index: 10;
+}
+
+#guy-wrap.dragging img {
+  animation-play-state: paused;
+}
+
+#door-wrap.target img {
+  filter: drop-shadow(0 0 2vh rgba(255, 255, 200, 0.9));
+}
+
+/* ---------- Scene 2 ---------- */
+
+#house-wrap {
+  left: 4vw;
+  bottom: 20vh;
+  height: 60vh;
+}
+
+#guy2-wrap {
+  left: 14vw;
+  bottom: 18vh;
+  height: 35vh;
+}
+
+#car-wrap {
+  left: 50%;
+  bottom: 2vh;
+  height: 22vh;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+#car-wrap.driving {
+  cursor: default;
+  transition: transform 1.5s ease-in;
+  /* push it from centred all the way past the right edge */
+  transform: translateX(calc(50vw + 100%));
+}
+
+/* ---------- Animations ---------- */
+
+.bob {
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5vh);
+  }
+}
+
+.shake {
+  animation: shake 0.12s linear infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(-0.3vh, 0.2vh) rotate(-0.5deg); }
+  50% { transform: translate(0.3vh, -0.2vh) rotate(0.5deg); }
+  75% { transform: translate(-0.2vh, -0.2vh) rotate(-0.3deg); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
